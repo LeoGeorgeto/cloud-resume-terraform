@@ -1,0 +1,9 @@
+# .gitignore for Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+.terraformrc
+terraform.rc
+*.tfvars
+.terraform.lock.hcl
