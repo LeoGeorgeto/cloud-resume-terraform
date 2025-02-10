@@ -1,9 +1,51 @@
-# .gitignore for Terraform
-.terraform/
+cat > .gitignore << EOL
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
 *.tfstate
 *.tfstate.*
+
+# Crash log files
 crash.log
+crash.*.log
+
+# Exclude provider binary
+.terraform.lock.hcl
+
+# Exclude sensitive vars
+*.tfvars
+*.tfvars.json
+
+# Exclude CLI configuration files
 .terraformrc
 terraform.rc
-*.tfvars
-.terraform.lock.hcl
+
+# Exclude override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Exclude local environment files
+.env
+.env.*
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Log files
+*.log
+
+# Backup files
+*.bak
+*.backup
+
+# Exclude any sensitive key material
+*.pem
+*.key
+EOL
