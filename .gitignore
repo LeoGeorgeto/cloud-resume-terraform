@@ -2,6 +2,9 @@ cat > .gitignore << EOL
 # Local .terraform directories
 **/.terraform/*
 
+# Local .terraform directories
+**/cloud-resume-terraform/*
+
 # .tfstate files
 *.tfstate
 *.tfstate.*
@@ -12,6 +15,15 @@ crash.*.log
 
 # Exclude provider binary
 .terraform.lock.hcl
+
+# Python bytecode & cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Python test scripts
+/cloud-resume-terraform/main.py
 
 # Exclude sensitive vars
 *.tfvars
