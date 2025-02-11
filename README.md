@@ -155,4 +155,4 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 ## 👨‍💻 **Author**
 
 **Leonardo Georgeto**  
-[LinkedIn](https://linkedin.com/in/georgetol) | [GitHub](https://github.com/LeoGeorgeto)
+[LinkedIn](https://linkedin.com/in/georgetol) | [GitHub](https://github.com/LeoGeorgeto) | [Resume](https://leogeo-cloudresume.com/) | [Portfolio](https://leogeorgeto.com/)
