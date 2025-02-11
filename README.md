@@ -1,167 +1,158 @@
-# Cloud Resume Infrastructure as Code (IaC)
+# **Cloud Resume Challenge - Terraform Infrastructure**
 
-## Overview
-This repository contains the Infrastructure as Code (IaC) implementation for the **Cloud Resume Challenge** using **Terraform**. It provisions and manages a complete AWS infrastructure for hosting a static website with a serverless visitor counter.
+A fully automated, serverless infrastructure for a Cloud Resume Challenge project, built with **Terraform**, **AWS Lambda**, **DynamoDB**, **API Gateway**, **CloudFront**, and **S3**. This project provides a scalable and cost-efficient solution for tracking visitor counts on a static website.
 
-## Architecture
-The infrastructure consists of the following components:
+---
 
-- **S3**: Static website hosting
-- **CloudFront**: Content delivery and HTTPS
-- **Route53**: DNS management
-- **ACM**: SSL/TLS certification
-- **Lambda** & **API Gateway**: Serverless visitor counter
-- **DynamoDB**: Visitor count storage
-- **IAM**: Security and access management
+## 🚀 **Features**
 
-## Prerequisites
-Ensure you have the following before getting started:
+- **Infrastructure as Code (IaC)**: All cloud resources are provisioned using **Terraform**.
+- **Serverless Backend**: Uses **AWS Lambda** and **DynamoDB** to store and manage visitor counts.
+- **API Gateway**: Exposes a RESTful API endpoint for client-side interaction.
+- **CloudFront & S3**: Implements a **CDN and static website hosting** for performance optimization.
+- **SSL/TLS Security**: Integrated **ACM certificates** for HTTPS security.
+- **Automated Deployments**: Uses **IAM roles** and **CI/CD IAM permissions** for automated deployments.
+- **CORS Configuration**: Ensures cross-origin resource sharing for frontend API calls.
 
-- An AWS Account
-- **Terraform** version 1.0.0 or higher
-- **AWS CLI** installed and configured
-- A domain name registered in **Route53**
+---
 
-## Directory Structure
+## 📂 **Project Structure**
 
 ```
 cloud-resume-terraform/
-├── lambda/                 # Lambda function code
-│   ├── counter.py         # Visitor counter implementation
-│   └── counter.zip        # Deployment package
-├── acm.tf                 # SSL certificate configuration
-├── api.tf                 # API Gateway and Lambda configuration
-├── cloudfront.tf          # CDN configuration
-├── data.tf                # Data sources
-├── dynamodb.tf            # Database configuration
-├── main.tf                # Provider configuration and IAM roles
-├── outputs.tf             # Output definitions
-├── route53.tf             # DNS configuration
-├── s3.tf                  # Static website bucket configuration
-└── variables.tf           # Variable definitions
+│
+├── .terraform/                    # Terraform state and provider files
+├── lambda/                        # Source code for AWS Lambda function
+│   ├── counter.py                 # Python function for visitor count
+│   ├── counter.zip                # Zipped package for Lambda deployment
+├── terraform/                      # Terraform configuration files
+│   ├── acm.tf                      # SSL/TLS certificate configuration
+│   ├── api.tf                      # API Gateway configuration
+│   ├── cloudfront.tf               # CloudFront CDN configuration
+│   ├── data.tf                     # Data sources
+│   ├── dynamodb.tf                 # DynamoDB table for visitor counter
+│   ├── main.tf                     # Core Terraform configurations
+│   ├── outputs.tf                  # Terraform output values
+│   ├── route53.tf                  # Route53 DNS configuration
+│   ├── s3.tf                       # S3 bucket for website hosting
+│   ├── variables.tf                 # Terraform variables
+│   ├── terraform.tfstate            # Terraform state file
+│   ├── terraform.tfstate.backup     # Terraform state backup
+├── .gitignore                      # Git ignore file
+├── README.md                       # Project documentation
 ```
 
-## Features
-- **Serverless Architecture**: Built on AWS serverless services.
-- **SSL/TLS Security**: Enforced HTTPS via CloudFront and ACM.
-- **Content Delivery Network**: Fast, globally distributed access to the website.
-- **Automated DNS Management**: Managed with Route53.
-- **Visitor Analytics**: Tracks visitor counts using Lambda and DynamoDB.
-- **Infrastructure as Code**: Fully defined in Terraform for reproducibility.
-- **Access Control and Security**: Implements least privilege access policies.
+---
+
+## 🛠 **Technologies Used**
+
+### **AWS Services**
+- **AWS Lambda** – Serverless compute to process visitor counts.
+- **Amazon DynamoDB** – NoSQL database to store visitor counts.
+- **Amazon API Gateway** – RESTful API for client-side interaction.
+- **Amazon S3** – Static website hosting for the frontend.
+- **AWS CloudFront** – Content Delivery Network (CDN) for global access.
+- **AWS Certificate Manager (ACM)** – Manages SSL/TLS certificates.
+- **AWS IAM** – Role-based access control and security policies.
+- **Amazon Route 53** – DNS management for custom domain configuration.
+
+### **Infrastructure as Code (IaC)**
+- **Terraform** – Manages all cloud resources programmatically.
+
+### **Backend Development**
+- **Python (boto3)** – AWS SDK for interacting with DynamoDB and Lambda.
 
 ---
 
-## Quick Start
+## 🔧 **Setup and Deployment**
 
-Follow these steps to deploy the infrastructure:
+### **Prerequisites**
 
-1. **Clone the repository**:
+Ensure you have the following installed:
+- **Terraform (>= v1.0.0)** – Infrastructure provisioning tool.
+- **AWS CLI** – Command-line tool to manage AWS services.
+- **Python 3.9+** – Required for Lambda function development.
+- **Git** – Version control system.
 
-   ```bash
-   git clone [repository-url]
-   cd cloud-resume-terraform
-   ```
+### **1. Clone the Repository**
+```bash
+git clone <repository-url>
+cd cloud-resume-terraform
+```
 
-2. **Update variables**:
+### **2. Configure AWS Credentials**
+Ensure you have AWS credentials configured in your environment.
+```bash
+aws configure
+```
 
-   Edit `variables.tf` or create a `terraform.tfvars` file with your configuration:
+### **3. Initialize Terraform**
+```bash
+terraform init
+```
 
-   ```hcl
-   domain_name  = "your-domain.com"
-   environment  = "production"
-   region       = "us-east-1"
-   ```
+### **4. Plan Infrastructure Deployment**
+```bash
+terraform plan
+```
 
-3. **Initialize Terraform**:
+### **5. Deploy Infrastructure**
+```bash
+terraform apply --auto-approve
+```
 
-   ```bash
-   terraform init
-   ```
+### **6. Verify Deployment**
+After a successful deployment, Terraform will output the following values:
+- **API URL:** The API Gateway endpoint for visitor count.
+- **CloudFront URL:** The distribution domain for the frontend.
 
-4. **Review the execution plan**:
-
-   ```bash
-   terraform plan
-   ```
-
-5. **Apply the configuration**:
-
-   ```bash
-   terraform apply
-   ```
-
----
-
-## Security
-
-### Access Management
-- **S3 bucket** access is restricted to CloudFront.
-- **HTTPS** is enforced for all traffic.
-- **IAM roles** are configured with the least privilege principle.
-- **Public access** is blocked on the S3 bucket.
-- **API Gateway** includes CORS configuration.
+```bash
+echo $(terraform output api_url)
+echo $(terraform output cloudfront_url)
+```
 
 ---
 
-## Resource Management
+## 📦 **Available Terraform Resources**
 
-### Created Resources
-- S3 Bucket (Static website hosting)
-- CloudFront Distribution
-- ACM Certificate
-- Route53 DNS Records
-- Lambda Function
-- DynamoDB Table
-- API Gateway
-- IAM Roles and Policies
-
-### State Management
-- The Terraform state file is stored locally by default.
-- For production environments, consider:
-  - Remote state storage (e.g., S3)
-  - State locking (e.g., DynamoDB)
-  - State encryption
+| Resource        | Description                                       |
+|----------------|---------------------------------------------------|
+| `aws_lambda_function` | Deploys the visitor counter function.       |
+| `aws_dynamodb_table`  | Stores visitor count data.                  |
+| `aws_api_gateway_rest_api` | Creates REST API for frontend access. |
+| `aws_cloudfront_distribution` | Serves the frontend securely.     |
+| `aws_s3_bucket` | Hosts the frontend files.                        |
+| `aws_route53_record` | Manages domain DNS settings.                |
+| `aws_acm_certificate` | Enables SSL/TLS security.                 |
 
 ---
 
-## Maintenance
+## 🚨 **Troubleshooting**
 
-### Updates
-- **To update the infrastructure**:
-  ```bash
-  terraform plan
-  terraform apply
-  ```
-
-- **To destroy the infrastructure**:
-  ```bash
-  terraform destroy
-  ```
-
-### Monitoring
-- **CloudWatch Logs**: Monitor the Lambda function.
-- **CloudFront Access Logs** (optional): Track CDN activity.
-- **DynamoDB Metrics**: Monitor database performance.
+### **Common Issues & Fixes**
+| Issue | Solution |
+|--------|----------|
+| `terraform init` fails | Ensure AWS CLI is configured properly. Run `aws configure`. |
+| `terraform apply` fails | Check for typos in variable values and ensure AWS permissions are correct. |
+| API Gateway not responding | Verify the `terraform output api_url` and test the endpoint using Postman or curl. |
+| CloudFront updates not reflecting | Invalidate the cache using `aws cloudfront create-invalidation --distribution-id <ID> --paths "/*"`. |
 
 ---
 
-## Best Practices Implemented
+## 📝 **License**
 
-- Infrastructure as Code (IaC)
-- Version Control
-- Modular Design
-- Least Privilege Access
-- Resource Tagging
-- Error Handling
-- CORS Security
-- SSL/TLS Encryption
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
 
 ---
 
-## Known Limitations
+## 🙌 **Acknowledgments**
 
-- Region-specific implementation (**us-east-1**)
-- Single environment configuration
-- Local Terraform state storage (by default)
+- Inspired by the **Cloud Resume Challenge** by Forrest Brazeal.
+- Built using **Terraform** and **AWS services** for hands-on cloud experience.
 
+---
+
+## 👨‍💻 **Author**
+
+**Leonardo Georgeto**  
+[LinkedIn](https://linkedin.com/in/georgetol) | [GitHub](https://github.com/LeoGeorgeto)
